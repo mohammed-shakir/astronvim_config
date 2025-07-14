@@ -1,34 +1,34 @@
-# AstroNvim Template
+**AstroNvim Config Fork**
 
-**NOTE:** This is for AstroNvim v5+
+This repository contains my customized AstroNvim setup. 
 
-A template for getting started with [AstroNvim](https://github.com/AstroNvim/AstroNvim)
+---
 
-## 🛠️ Installation
+## 1. Sync with Upstream
 
-#### Make a backup of your current nvim and shared folder
+Pull in the latest changes from the official AstroNvim template:
 
-```shell
-mv ~/.config/nvim ~/.config/nvim.bak
-mv ~/.local/share/nvim ~/.local/share/nvim.bak
-mv ~/.local/state/nvim ~/.local/state/nvim.bak
-mv ~/.cache/nvim ~/.cache/nvim.bak
+```bash
+# (Only if you haven't already) Add the official AstroNvim template as upstream
+git remote add upstream https://github.com/AstroNvim/template.git
+
+# Fetch and rebase your custom commits on top of the latest template
+git pull --rebase upstream main -X theirs
+
+# Push the rebased history to your fork
+git push origin main --force-with-lease
 ```
 
-#### Create a new user repository from this template
+---
 
-Press the "Use this template" button above to create a new repository to store your user configuration.
+## 2. Install on a New Machine
 
-You can also just clone this repository directly if you do not want to track your user configuration in GitHub.
+Clone and bootstrap AstroNvim:
 
-#### Clone the repository
+```bash
+# Clone into the standard Neovim config directory
+git clone git@github.com:mohammed-shakir/astronvim_config.git ~/.config/nvim
 
-```shell
-git clone https://github.com/<your_user>/<your_repository> ~/.config/nvim
-```
-
-#### Start Neovim
-
-```shell
-nvim
+# Install plugins and apply your config headlessly
+nvim --headless -c 'quitall'
 ```
