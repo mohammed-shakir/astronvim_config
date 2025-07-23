@@ -1,4 +1,4 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+-- if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 
 -- AstroLSP allows you to customize the features in AstroNvim's LSP configuration engine
 -- Configuration documentation can be found with `:h astrolsp`
@@ -16,6 +16,12 @@ return {
       inlay_hints = false, -- enable/disable inlay hints on start
       semantic_tokens = true, -- enable/disable semantic token highlighting
     },
+
+    defaults = {
+      hover = { border = "rounded", silent = true },
+      signature_help = { border = "rounded", silent = true },
+    },
+
     -- customize lsp formatting options
     formatting = {
       -- control auto formatting on save
@@ -76,6 +82,19 @@ return {
           end,
         },
       },
+      hover_diagnostics = {
+        {
+          event = { "CursorHold", "CursorHoldI" },
+          desc = "Auto show diagnostics float",
+          callback = function()
+            if vim.fn.mode() ~= "n" then return end
+            vim.diagnostic.open_float(nil, {
+              scope = "cursor",
+              focus = false,
+            })
+          end,
+        },
+      },
     },
     -- mappings to be set up on attaching of a language server
     mappings = {
@@ -92,6 +111,11 @@ return {
           cond = function(client)
             return client.supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens ~= nil
           end,
+        },
+        ["<leader>ca"] = {
+          function() vim.lsp.buf.code_action() end,
+          desc = "Code Actions",
+          cond = "textDocument/codeAction",
         },
       },
     },
